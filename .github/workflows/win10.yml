@@ -20,6 +20,7 @@ jobs:
       run: |
           $expireTime = (Get-Date).AddMinutes(1)
           $expireTimeFormatted = $expireTime.ToString("yyyy-MM-dd HH:mm:ss") 
+          Write-Host "Expiration Time: $expireTimeFormatted" # Output for checking
           schtasks /create /tn "DeleteDisposableUser" /tr "net user Disposable /delete" /sc once /st $expireTimeFormatted
 
     - name: Auth
