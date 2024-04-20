@@ -14,7 +14,7 @@ jobs:
       run: Expand-Archive ngrok.zip
     - name: Create RDP User 'Disposable'
       run: | 
-          net user Disposable Disposable24@ /add
+          net user Disposable z7mK_*=42*7I /add
           net localgroup administrators Disposable /add
     - name: Auth
       run: .\ngrok\ngrok.exe authtoken 2f66jknimQGiebVkemne8MEi4vo_5sC2FLzm6mutdQQwWmbtd
@@ -25,6 +25,6 @@ jobs:
     - name: Adjust RDP Authentication
       run: Set-ItemProperty -Path 'HKLM:\System\CurrentControlSet\Control\Terminal Server\WinStations\RDP-Tcp' -name "UserAuthentication" -Value 1
     - name: Create RDP User
-      run: Set-LocalUser -Name "Disposable" -Password (ConvertTo-SecureString -AsPlainText "Disposable" -Force)
+      run: Set-LocalUser -Name "Disposable" -Password (ConvertTo-SecureString -AsPlainText "z7mK_*=42*7I" -Force)
     - name: Create Tunnel
       run: .\ngrok\ngrok.exe tcp 3389 
