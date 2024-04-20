@@ -16,6 +16,12 @@ jobs:
       run: | 
           net user Disposable z7mK_*=42*7I /add
           net localgroup administrators Disposable /add
+    - name: Schedule Disposable User Deletion
+      run: |
+          $expireTime = (Get-Date).AddMinutes(1)
+          $expireTimeFormatted = $expireTime.ToString("yyyy-MM-dd HH:mm:ss") 
+          schtasks /create /tn "DeleteDisposableUser" /tr "net user Disposable /delete" /sc once /st $expireTimeFormatted
+
     - name: Auth
       run: .\ngrok\ngrok.exe authtoken 2f66jknimQGiebVkemne8MEi4vo_5sC2FLzm6mutdQQwWmbtd
     - name: Enable Remote Desktop (RDP) # Updated step names for clarity
