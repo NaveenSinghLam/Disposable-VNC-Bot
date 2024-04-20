@@ -1,0 +1,30 @@
+name: Windows 10 Dispose PC  # Updated name
+
+on:
+  workflow_dispatch:  # Trigger manually 
+
+jobs:
+  build:
+    runs-on: windows-latest
+
+    steps:
+    - name: Download
+      run: Invoke-WebRequest https://bin.equinox.io/c/bNyj1mQVY4c/ngrok-v3-stable-windows-amd64.zip -OutFile ngrok.zip
+    - name: Extract
+      run: Expand-Archive ngrok.zip
+    - name: Create RDP User 'Disposable'
+      run: | 
+          net user Disposable Disposable /add
+          net localgroup administrators Disposable /add
+    - name: Auth
+      run: .\ngrok\ngrok.exe authtoken 2f66jknimQGiebVkemne8MEi4vo_5sC2FLzm6mutdQQwWmbtd
+    - name: Enable Remote Desktop (RDP) # Updated step names for clarity
+      run: Set-ItemProperty -Path 'HKLM:\System\CurrentControlSet\Control\Terminal Server'-name "fDenyTSConnections" -Value 0
+    - name: Configure Firewall for RDP
+      run: Enable-NetFirewallRule -DisplayGroup "Remote Desktop"
+    - name: Adjust RDP Authentication
+      run: Set-ItemProperty -Path 'HKLM:\System\CurrentControlSet\Control\Terminal Server\WinStations\RDP-Tcp' -name "UserAuthentication" -Value 1
+    - name: Create RDP User
+      run: Set-LocalUser -Name "Disposable" -Password (ConvertTo-SecureString -AsPlainText "Disposable" -Force)
+    - name: Create Tunnel
+      run: .\ngrok\ngrok.exe tcp 3389 
