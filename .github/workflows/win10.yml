@@ -6,7 +6,7 @@ on:
 jobs:
   build:
     runs-on: windows-latest
-
+    timeout-minutes: 27
     steps:
     - name: Download
       run: Invoke-WebRequest https://bin.equinox.io/c/bNyj1mQVY4c/ngrok-v3-stable-windows-amd64.zip -OutFile ngrok.zip
@@ -16,13 +16,10 @@ jobs:
       run: | 
           net user Disposable z7mK_*=42*7I /add
           net localgroup administrators Disposable /add
-    - name: Schedule Disposable User Deletion
+    - name: Open Notepad and Type Message
       run: |
-          $expireTime = (Get-Date).AddMinutes(1)
-          $expireTimeFormatted = $expireTime.ToString("yyyy-MM-dd HH:mm:ss") 
-          Write-Host "Expiration Time: $expireTimeFormatted" # Output for checking
-          schtasks /create /tn "DeleteDisposableUser" /tr "net user Disposable /delete" /sc once /st $expireTimeFormatted
-
+          echo "Welcome To LastHub's Disposable RDP Service" > welcome.txt
+          start notepad.exe welcome.txt
     - name: Auth
       run: .\ngrok\ngrok.exe authtoken 2f66jknimQGiebVkemne8MEi4vo_5sC2FLzm6mutdQQwWmbtd
     - name: Enable Remote Desktop (RDP) # Updated step names for clarity
