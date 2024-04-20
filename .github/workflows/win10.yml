@@ -1,7 +1,8 @@
 name: Windows 10 Dispose PC  # Updated name
 
-on:
-  workflow_dispatch:  # Trigger manually 
+on: 
+  repository_dispatch:  # Triggered by the Discord Bot
+    types: [create_pc]
 
 jobs:
   build:
