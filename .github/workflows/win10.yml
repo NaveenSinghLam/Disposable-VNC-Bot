@@ -21,7 +21,7 @@ jobs:
           echo "Welcome To LastHub's Disposable RDP Service" > welcome.txt
           start notepad.exe welcome.txt
     - name: Auth
-      run: .\ngrok\ngrok.exe authtoken 2HIgySu1ztHjL0eGJyN8oxzcqIM_678XcAgPqERhdphhd9c5J
+      run: .\ngrok\ngrok.exe authtoken 2hbYXm6wXoRaIEjSpKIwsCG3yEM_s9pMRnsxhqM3Mv8wU5CQ
     - name: Enable Remote Desktop (RDP) # Updated step names for clarity
       run: Set-ItemProperty -Path 'HKLM:\System\CurrentControlSet\Control\Terminal Server'-name "fDenyTSConnections" -Value 0
     - name: Configure Firewall for RDP
